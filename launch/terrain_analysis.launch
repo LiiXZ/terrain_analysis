@@ -1,0 +1,38 @@
+<launch>
+  <arg name="points_topic" default="/rslidar_points" />
+  <arg name="state_topic" default="/us_liorf_localization/mapping/base_odometry" />
+  
+  <node pkg="terrain_analysis" type="terrainAnalysis" name="terrainAnalysis" output="screen" required="true">
+    <param name="points_topic" value="$(arg points_topic)" />
+    <param name="state_topic" value="$(arg state_topic)" />
+    <param name="disX" type="double" value="0.5" /> <!--机器人中心X轴方向的点云滤波长度 -->
+    <param name="disY" type="double" value="0.35" /> <!--机器人中心Y轴方向的点云滤波长度 -->
+    <param name="scanVoxelSize" type="double" value="0.05" /> <!--点云下采样 -->
+    <param name="decayTime" type="double" value="2.0" />  <!--点云时间差阈值 大于的不会被处理 -->
+    <param name="noDecayDis" type="double" value="4.0" />  <!--点云距离阈值 小于该阈值不考虑时间差 -->
+    <param name="clearingDis" type="double" value="8.0" />  <!--该距离外的点会被清除 -->
+    <param name="useSorting" type="bool" value="false" />
+    <param name="quantileZ" type="double" value="0.25" />  <!--考虑地面附近高程最小值会改变 -->
+    <param name="considerDrop" type="bool" value="true" />  <!--地面以下的相对高度将取绝对值 -->
+    <param name="limitGroundLift" type="bool" value="false" />
+    <param name="maxGroundLift" type="double" value="0.15" />
+    <param name="clearDyObs" type="bool" value="true" />
+    <param name="minDyObsDis" type="double" value="0.3" />
+    <param name="minDyObsAngle" type="double" value="0" />
+    <param name="minDyObsRelZ" type="double" value="-0.5" />
+    <param name="absDyObsRelZThre" type="double" value="0.2" />
+    <param name="minDyObsVFOV" type="double" value="-16.0" />
+    <param name="maxDyObsVFOV" type="double" value="16.0" />
+    <param name="minDyObsPointNum" type="int" value="1" />
+    <param name="noDataObstacle" type="bool" value="false" />
+    <param name="noDataBlockSkipNum" type="int" value="0" />
+    <param name="minBlockPointNum" type="int" value="10" />  <!-- 计算有效高程的最小点云数量 -->
+    <param name="vehicleHeight" type="double" value="0.5" />  <!-- 车辆的高度 -->
+    <param name="voxelPointUpdateThre" type="int" value="100" />  <!-- 需要处理的体素网格点云数量最小值 -->
+    <param name="voxelTimeUpdateThre" type="double" value="2.0" />  <!-- 更新体素网格时间阈值 -->
+    <param name="minRelZ" type="double" value="-2.5" />  <!-- 点云处理的最小高度 -->
+    <param name="maxRelZ" type="double" value="2.0" />  <!-- 点云处理的最大高度 -->
+    <param name="disRatioZ" type="double" value="0.2" />  <!-- 点云处理的高度与距离的比例 -->
+  </node>
+
+</launch>
